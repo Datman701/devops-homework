@@ -1,4 +1,4 @@
-
+task 1 : 
 
 ![docker ps](image.png)
 
@@ -23,3 +23,19 @@
 ![alt text](image-5.png)
 
 ![alt text](image-6.png)
+
+
+task 2:
+
+![alt text](image-7.png)
+
+![alt text](image-8.png)
+
+task 3:
+
+![alt text](image-9.png)
+
+![alt text](image-10.png)
+
+![alt text](image-11.png)
+
