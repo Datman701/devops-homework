@@ -13,42 +13,42 @@ Real run: <https://github.com/Datman701/devops-homework/actions/runs/37663079981
 
 #### 1. Unit tests with coverage — 8 passed
 
-![Unit tests](01-s17-01-tests.png)
+![Unit tests](02-screenshots/01-s17-01-tests.png)
 
 #### 2. SAST — bandit static analysis
 
-![SAST bandit](02-s17-02-sast.png)
+![SAST bandit](02-screenshots/02-s17-02-sast.png)
 
 #### 3. SCA (pip-audit) and secret scanning — both clean
 
-![SCA and secret scan](03-s17-03-sca-secrets.png)
+![SCA and secret scan](02-screenshots/03-s17-03-sca-secrets.png)
 
 #### 4. Container image scanning — Trivy, 44 HIGH findings
 
-![Trivy image scan](04-s17-04-trivy-image-scan.png)
+![Trivy image scan](02-screenshots/04-s17-04-trivy-image-scan.png)
 
 #### 5. Security gate — CRITICAL threshold blocks publish
 
-![Security gate](05-s17-05-security-gate.png)
+![Security gate](02-screenshots/05-s17-05-security-gate.png)
 
 #### 6. Kubernetes deployment — app serving real traffic
 
-![Kubernetes deployment](06-s17-06-k8s-deployment.png)
+![Kubernetes deployment](02-screenshots/06-s17-06-k8s-deployment.png)
 
 ### Real GitHub Actions run
 
 #### 7. Workflow runs list
 
-![Actions runs list](07-s17-07-actions-runs-list.png)
+![Actions runs list](02-screenshots/07-s17-07-actions-runs-list.png)
 
 #### 8. All seven gated jobs green, gate fan-out visible
 
-![Seven gated jobs](08-s17-08-seven-gated-jobs-green.png)
+![Seven gated jobs](02-screenshots/08-s17-08-seven-gated-jobs-green.png)
 
 #### 9. Image Scan (Trivy) job steps
 
-![Trivy job steps](09-s17-09-trivy-job-steps.png)
+![Trivy job steps](02-screenshots/09-s17-09-trivy-job-steps.png)
 
 #### 10. Image published to GHCR
 
-![GHCR package](10-s17-10-ghcr-package.png)
+![GHCR package](02-screenshots/10-s17-10-ghcr-package.png)
