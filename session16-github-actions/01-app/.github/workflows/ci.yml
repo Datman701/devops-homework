@@ -110,9 +110,16 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # GHCR requires a lowercase repository path; the owner may contain capitals
+      - name: Resolve lowercase image path
+        id: meta
+        run: echo "image=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/s16-calculator" >> "$GITHUB_OUTPUT"
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -127,5 +134,5 @@ jobs:
           context: session16-github-actions/01-app
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/s16-calculator:latest
-            ghcr.io/${{ github.repository }}/s16-calculator:${{ github.sha }}
+            ${{ steps.meta.outputs.image }}:latest
+            ${{ steps.meta.outputs.image }}:${{ github.sha }}
