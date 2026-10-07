@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: errimage-demo
+  namespace: troubleshooting-demos
+spec:
+  containers:
+    - name: app
+      image: 192.168.99.99/nginx:latest
+      imagePullPolicy: Always

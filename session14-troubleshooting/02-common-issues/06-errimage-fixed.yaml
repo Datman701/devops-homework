@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: errimage-fixed
+  namespace: troubleshooting-demos
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27
+      imagePullPolicy: IfNotPresent

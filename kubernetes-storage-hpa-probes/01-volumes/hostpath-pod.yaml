@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-demo
+  labels:
+    app: hostpath-demo
+    topic: volumes
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: host-store
+          mountPath: /data
+  volumes:
+    - name: host-store
+      hostPath:
+        path: /tmp/student-hostpath-data
+        type: DirectoryOrCreate

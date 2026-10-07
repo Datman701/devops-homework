@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-demo
+  labels:
+    app: storage-demo
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: persistent-store
+          mountPath: /data
+  volumes:
+    - name: persistent-store
+      persistentVolumeClaim:
+        claimName: student-pvc

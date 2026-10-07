@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: troubleshooting-demos
+data:
+  APP_ENV: production
+  LOG_LEVEL: info
+  CORRECT_SETTING: "yes"

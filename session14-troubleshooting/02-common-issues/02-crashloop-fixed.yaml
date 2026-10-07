@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crashloop-fixed
+  namespace: troubleshooting-demos
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27
+      imagePullPolicy: IfNotPresent
+      command: ["sh", "-c", "echo running fine; sleep infinity"]

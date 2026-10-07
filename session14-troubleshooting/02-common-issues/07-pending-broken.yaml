@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pending-demo
+  namespace: troubleshooting-demos
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27
+      imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 999999
+          memory: 999999Mi

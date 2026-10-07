@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dns-test
+  namespace: troubleshooting-demos
+spec:
+  containers:
+    - name: debug
+      image: busybox:1.36
+      imagePullPolicy: IfNotPresent
+      command: ["sh", "-c", "echo testing-DNS; nslookup kubernetes.default; sleep infinity"]
