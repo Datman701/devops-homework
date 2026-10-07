@@ -1,0 +1,15 @@
+# Terraform state and provider cache
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Real variable files often contain secrets and are normally NOT committed.
+# This project is coursework, so terraform.tfvars is tracked on purpose to
+# satisfy the required folder structure. Use example.tfvars for the template.
+*.tfvars
+!terraform.tfvars
+!example.tfvars
+
+*.tfplan
+.terraform.lock.hcl.user
