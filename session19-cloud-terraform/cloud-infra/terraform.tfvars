@@ -1,0 +1,5 @@
+aws_region    = "ap-south-1"
+project_name  = "session19"
+environment   = "dev"
+instance_type = "t3.micro"
+bucket_name   = "session19-cloud-artifacts"

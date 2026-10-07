@@ -1,0 +1,7 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+# private keys must never be committed
+session19_devops
+session19_devops.pub
