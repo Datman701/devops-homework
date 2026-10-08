@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-alerts
+data:
+  alerts.yml: |
+    groups:
+      - name: node-alerts
+        rules:
+          - alert: HighCpuUsage
+            expr: 100-(avg(rate(node_cpu_seconds_total{mode="idle"}[2m]))*100) > 85
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Node CPU usage above 85%"
+              description: "Average CPU across all cores has been above 85% for 2 minutes."
+
+          - alert: LowDiskSpace
+            expr: 100*(1-node_filesystem_avail_bytes{mountpoint="/"}/node_filesystem_size_bytes{mountpoint="/"}) > 90
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Root filesystem above 90% used"
+              description: "Disk space on / is nearly exhausted."
+
+          - alert: PrometheusDown
+            expr: up{job="prometheus"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Prometheus cannot scrape itself"
+              description: "The prometheus target has been down for over a minute."
+
+          - alert: NodeExporterDown
+            expr: up{job="node"} == 0
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "node-exporter target is down"
+              description: "Host-level metrics collection has stopped."
