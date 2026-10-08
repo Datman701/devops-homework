@@ -28,10 +28,7 @@ Real run: <https://github.com/Datman701/devops-homework/actions/runs/37660905101
 
 ![Run Tests job steps](02-screenshots/05-s16-05-run-tests-job-steps.png)
 
-### 6. Artifacts uploaded by the pipeline
 
-![Artifacts](02-screenshots/06-s16-06-artifacts.png)
-
-### 7. Image published to GHCR
+### 6. Image published to GHCR
 
 ![GHCR package](02-screenshots/07-s16-07-ghcr-package.png)
