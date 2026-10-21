@@ -5,5 +5,27 @@ __pycache__/
 coverage.xml
 test-results/
 build/
+dist/
 *.egg-info/
 .venv/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Local databases and environment files
+*.db
+.env
+.env.*
+!.env.example
+
+# Terraform generated artefacts
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+!*.tfvars.example
+
+# macOS
+.DS_Store

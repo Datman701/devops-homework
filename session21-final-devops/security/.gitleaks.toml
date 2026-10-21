@@ -1,0 +1,20 @@
+# Gitleaks configuration for the TaskBoard repository.
+# The default rules cover AWS keys, GitHub tokens, private keys, passwords and
+# common provider credentials. The only allowlist entry is the deliberate
+# classroom PostgreSQL password used by the local Compose stack and Helm chart.
+title = "TaskBoard secret scanning"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Classroom-only values and generated evidence"
+paths = [
+  '''screenshots/''',
+  '''.*\.md$''',
+]
+regexes = [
+  '''taskboard:taskboard''',
+  '''password:\s*"?taskboard"?''',
+  '''POSTGRES_PASSWORD:\s*"?taskboard"?''',
+]

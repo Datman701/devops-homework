@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-alerts
+data:
+  alerts.yml: |
+    groups:
+      - name: taskboard-alerts
+        rules:
+          - alert: TaskBoardTargetDown
+            expr: up{job="taskboard-backend"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "TaskBoard backend metrics target is down"
+              description: "Prometheus has been unable to scrape the TaskBoard backend for more than one minute."
+
+          - alert: TaskBoardHighErrorRate
+            expr: sum(rate(http_requests_total{status=~"5.."}[5m])) / clamp_min(sum(rate(http_requests_total[5m])), 1) > 0.05
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "TaskBoard 5xx error rate above 5%"
+              description: "More than 5% of requests have returned a 5xx status for two minutes."
+
+          - alert: TaskBoardHighLatency
+            expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 1
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "TaskBoard p95 latency above one second"
+              description: "The 95th percentile request duration has exceeded one second for five minutes."
+
+          - alert: TaskBoardBackendCPUHigh
+            expr: sum(rate(container_cpu_usage_seconds_total{namespace="taskboard",pod=~"taskboard-backend.*",container="backend"}[1m])) > 0.8
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "TaskBoard backend CPU above 0.8 cores"
+              description: "Backend CPU usage has been above 0.8 cores for five minutes; the HPA should be scaling out."
+
+      - name: node-alerts
+        rules:
+          - alert: HighCpuUsage
+            expr: 100-(avg(rate(node_cpu_seconds_total{mode="idle"}[2m]))*100) > 85
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Node CPU usage above 85%"
+
+          - alert: LowDiskSpace
+            expr: 100*(1-node_filesystem_avail_bytes{mountpoint="/"}/node_filesystem_size_bytes{mountpoint="/"}) > 90
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Root filesystem above 90% used"

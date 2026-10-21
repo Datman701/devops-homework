@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: taskboard
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Datman701/devops-homework.git
+    targetRevision: main
+    path: session21-final-devops/helm/taskboard
+    helm:
+      valueFiles:
+        - values.yaml
+      parameters:
+        - name: backend.image
+          value: ghcr.io/datman701/taskboard-backend
+        - name: backend.tag
+          value: latest
+        - name: frontend.image
+          value: ghcr.io/datman701/taskboard-frontend
+        - name: frontend.tag
+          value: latest
+        - name: ingress.enabled
+          value: "true"
+        - name: ingress.host
+          value: taskboard.local
+        - name: monitoring.serviceMonitor.enabled
+          value: "false"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: taskboard
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

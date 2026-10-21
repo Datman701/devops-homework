@@ -1,0 +1,39 @@
+# Values for the TaskBoard AWS stack.
+#
+# Copy to terraform.tfvars and edit, or pass with:
+#   terraform plan -var-file=terraform.tfvars
+#
+# NO CREDENTIALS BELONG IN THIS FILE. Terraform reads AWS credentials from the
+# standard chain (AWS_PROFILE, AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY
+# environment variables, or ~/.aws/credentials). Anything resembling a key here
+# would be committed by accident, and the grading team rejects submissions that
+# contain credentials in their history.
+
+# Copy to terraform.tfvars.example instead of committing a real tfvars file.
+# terraform.tfvars is already covered by .gitignore.
+
+region        = "us-east-1"
+project_name  = "taskboard"
+environment   = "demo"
+
+vpc_cidr      = "10.20.0.0/16"
+
+availability_zones = ["us-east-1a", "us-east-1b"]
+
+cluster_name         = "taskboard-eks"
+node_instance_types  = ["t3.medium"]
+node_desired_size    = 2
+node_min_size        = 1
+node_max_size        = 3
+
+# A NAT Gateway costs about USD 0.045/hour plus data charges and is the most
+# expensive item in this stack. It is off by default, which puts the worker
+# nodes in public subnets. Turn it on only if the demo needs private nodes with
+# outbound internet access.
+enable_nat_gateway = false
+
+endpoint_public_access = true
+
+# Narrow this to your own IP before running anything that is not a throwaway,
+# for example allowed_cidr_blocks = ["203.0.113.10/32"].
+allowed_cidr_blocks = ["0.0.0.0/0"]

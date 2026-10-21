@@ -1,0 +1,15 @@
+frontend:
+  image: ghcr.io/YOUR_ORG/taskboard-frontend
+  tag: latest
+backend:
+  image: ghcr.io/YOUR_ORG/taskboard-backend
+  tag: latest
+replicaCount: 2
+ingress:
+  enabled: true
+  host: taskboard.example.com
+hpa:
+  enabled: true
+monitoring:
+  serviceMonitor:
+    enabled: true

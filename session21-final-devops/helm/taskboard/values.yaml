@@ -1,0 +1,46 @@
+fullnameOverride: ""
+
+frontend:
+  image: taskboard-frontend
+  tag: local
+backend:
+  image: taskboard-backend
+  tag: local
+
+replicaCount: 2
+namespace: taskboard
+imagePullSecrets: []
+
+config:
+  appName: TaskBoard API
+  appEnv: production
+  logLevel: INFO
+
+postgres:
+  host: taskboard-postgres
+  database: taskboard
+  username: taskboard
+  password: taskboard
+  storageSize: 5Gi
+
+ingress:
+  enabled: false
+  host: taskboard.local
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 60
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+monitoring:
+  serviceMonitor:
+    enabled: false

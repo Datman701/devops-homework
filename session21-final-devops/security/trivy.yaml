@@ -1,0 +1,13 @@
+# Trivy configuration used by the container-image scan job.
+# The pipeline overrides the severity and exit code on the command line so the
+# gate is explicit in the workflow, but these defaults keep local runs aligned.
+scan:
+  scanners:
+    - vuln
+    - secret
+    - misconfig
+severity:
+  - HIGH
+  - CRITICAL
+ignore-unfixed: true
+exit-code: 1
