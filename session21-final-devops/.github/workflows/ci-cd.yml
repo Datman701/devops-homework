@@ -163,7 +163,7 @@ jobs:
           tags: taskboard-frontend:scan
 
       - name: Scan backend image
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: taskboard-backend:scan
           severity: HIGH,CRITICAL
@@ -171,7 +171,7 @@ jobs:
           exit-code: "1"
 
       - name: Scan frontend image
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: taskboard-frontend:scan
           severity: HIGH,CRITICAL
