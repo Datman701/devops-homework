@@ -18,13 +18,13 @@ spec:
         - name: backend.image
           value: ghcr.io/datman701/taskboard-backend
         - name: backend.tag
-          value: latest
+          value: 302d6de746eba663e682d8056cbe60d040266c47
         - name: frontend.image
           value: ghcr.io/datman701/taskboard-frontend
         - name: frontend.tag
-          value: latest
+          value: 302d6de746eba663e682d8056cbe60d040266c47
         - name: ingress.enabled
-          value: "true"
+          value: "false"
         - name: ingress.host
           value: taskboard.local
         - name: monitoring.serviceMonitor.enabled

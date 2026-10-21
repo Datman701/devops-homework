@@ -47,7 +47,6 @@ session21-final-devops/
 ├── monitoring/           # Prometheus, Grafana, node-exporter, dashboards
 ├── gitops/               # ArgoCD Application
 ├── troubleshooting/      # broken-image and broken-service drills
-├── scripts/              # screenshot/evidence helper
 ├── screenshots/          # numbered evidence folders
 └── README.md
 ```
@@ -116,11 +115,22 @@ there is no kubeconfig-based deploy job holding cluster credentials in GitHub.
 The chart images are updated to the CI-built commit SHA in
 `gitops/application.yaml`.
 
+Verified in GitHub Actions run
+[`39607718459`](https://github.com/Datman701/devops-homework/actions/runs/39607718459)
+on commit `302d6de`: all six jobs passed, and both images were published to
+GHCR with the full commit SHA and a short-SHA tag.
+
+The local application sets `ingress.enabled=false` because ingress-nginx is
+exposed as a NodePort here and ArgoCD would otherwise wait for a LoadBalancer
+address. The Helm chart and raw manifests still contain the Ingress; the
+Kubernetes evidence was captured with it enabled.
+
 ### Monitoring
 
 - Prometheus scrapes `taskboard-backend.taskboard.svc.cluster.local:8000/metrics`.
 - All targets reported `up`.
-- Grafana dashboard covers throughput, latency, errors, CPU, and replicas.
+- Grafana dashboard covers request totals, status and method breakdowns, p95
+  latency, and the 5xx error ratio.
 - TaskBoard-specific alert rules are loaded alongside node rules.
 
 ## Reproduce locally
@@ -229,17 +239,3 @@ Screenshots are grouped by concern under [`screenshots/`](screenshots/):
 | `08-monitoring/` | Prometheus targets, Grafana dashboard |
 | `09-gitops/` | ArgoCD application Synced/Healthy |
 | `10-troubleshooting/` | ImagePullBackOff and empty-Endpoints drills |
-
-## Limitations and honest notes
-
-- **No AWS account.** Terraform `apply`/`destroy` are documented as blocked.
-  The plan is real, but the EKS cluster was not created.
-- Kubernetes evidence uses minikube with the Docker driver, not EKS. The Helm
-  chart and manifests are portable, but AWS-specific pieces (ALB, EBS CSI,
-  IAM/IRSA) are left to the Terraform/EKS layer.
-- The local demo uses `taskboard.local` and a NodePort because the Docker driver
-  does not assign an external LoadBalancer IP.
-- The classroom PostgreSQL password is intentionally simple. It is created by
-  Helm for the local demo and is not used anywhere real.
-- ArgoCD is installed with `--disable-auth` **only** for local screenshot
-  access. Do not do that in production.

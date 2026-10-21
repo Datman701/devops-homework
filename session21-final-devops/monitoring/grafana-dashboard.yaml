@@ -23,10 +23,10 @@ data:
         {
           "id": 2,
           "type": "stat",
-          "title": "Requests / second",
+          "title": "Requests since start",
           "gridPos": { "h": 5, "w": 6, "x": 6, "y": 0 },
           "targets": [
-            { "expr": "sum(rate(http_requests_total[1m]))", "refId": "A" }
+            { "expr": "sum(http_requests_total)", "refId": "A" }
           ]
         },
         {
@@ -50,16 +50,16 @@ data:
             "defaults": { "unit": "percentunit" }
           },
           "targets": [
-            { "expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / clamp_min(sum(rate(http_requests_total[5m])), 1)", "refId": "A" }
+            { "expr": "(sum(rate(http_requests_total{status=\"5xx\"}[5m])) or vector(0)) / clamp_min(sum(rate(http_requests_total[5m])), 1)", "refId": "A" }
           ]
         },
         {
           "id": 5,
           "type": "timeseries",
-          "title": "Request rate by endpoint",
+          "title": "Requests by endpoint (since start)",
           "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 },
           "targets": [
-            { "expr": "sum(rate(http_requests_total[1m])) by (handler)", "refId": "A" }
+            { "expr": "sum(http_requests_total) by (handler)", "refId": "A" }
           ]
         },
         {
@@ -75,19 +75,19 @@ data:
         {
           "id": 7,
           "type": "timeseries",
-          "title": "Backend CPU (cores)",
+          "title": "Responses by status (since start)",
           "gridPos": { "h": 8, "w": 12, "x": 0, "y": 13 },
           "targets": [
-            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"taskboard\",pod=~\"taskboard-backend.*\",container=\"backend\"}[1m])) by (pod)", "refId": "A" }
+            { "expr": "sum(http_requests_total) by (status)", "refId": "A" }
           ]
         },
         {
           "id": 8,
           "type": "timeseries",
-          "title": "Backend replicas",
+          "title": "Requests by method (since start)",
           "gridPos": { "h": 8, "w": 12, "x": 12, "y": 13 },
           "targets": [
-            { "expr": "count(up{job=\"taskboard-backend\"} == 1)", "refId": "A" }
+            { "expr": "sum(http_requests_total) by (method)", "refId": "A" }
           ]
         }
       ]

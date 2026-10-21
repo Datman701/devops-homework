@@ -40,6 +40,12 @@ spec:
               value: admin
             - name: GF_USERS_ALLOW_SIGN_UP
               value: "false"
+            # Local evidence only: read-only anonymous access so headless
+            # Chromium can capture the provisioned dashboard without a login.
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "true"
+            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+              value: Viewer
           ports:
             - name: http
               containerPort: 3000

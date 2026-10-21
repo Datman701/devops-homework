@@ -65,17 +65,17 @@ taskboard-backend  up
 The Grafana dashboard `TaskBoard — Application Overview` includes:
 
 - scrape target health
-- requests per second
+- requests since start
 - p95 latency
 - 5xx error ratio
-- request rate by endpoint
+- requests by endpoint
 - latency percentiles
-- backend CPU by pod
-- backend replica count
+- responses by status
+- requests by method
 
 ## Alerts
 
 `TaskBoardTargetDown`, `TaskBoardHighErrorRate`, `TaskBoardHighLatency`, and
-`TaskBoardBackendCPUHigh` are loaded from `prometheus-alerts.yaml`. The rules
+`TaskBoardHighRequestRate` are loaded from `prometheus-alerts.yaml`. The rules
 are evaluated by the same Prometheus instance; no Alertmanager is configured in
 this local demo.

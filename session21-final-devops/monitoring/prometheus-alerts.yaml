@@ -17,7 +17,7 @@ data:
               description: "Prometheus has been unable to scrape the TaskBoard backend for more than one minute."
 
           - alert: TaskBoardHighErrorRate
-            expr: sum(rate(http_requests_total{status=~"5.."}[5m])) / clamp_min(sum(rate(http_requests_total[5m])), 1) > 0.05
+            expr: (sum(rate(http_requests_total{status="5xx"}[5m])) or vector(0)) / clamp_min(sum(rate(http_requests_total[5m])), 1) > 0.05
             for: 2m
             labels:
               severity: warning
@@ -34,14 +34,14 @@ data:
               summary: "TaskBoard p95 latency above one second"
               description: "The 95th percentile request duration has exceeded one second for five minutes."
 
-          - alert: TaskBoardBackendCPUHigh
-            expr: sum(rate(container_cpu_usage_seconds_total{namespace="taskboard",pod=~"taskboard-backend.*",container="backend"}[1m])) > 0.8
-            for: 5m
+          - alert: TaskBoardHighRequestRate
+            expr: sum(rate(http_requests_total[5m])) > 50
+            for: 2m
             labels:
               severity: warning
             annotations:
-              summary: "TaskBoard backend CPU above 0.8 cores"
-              description: "Backend CPU usage has been above 0.8 cores for five minutes; the HPA should be scaling out."
+              summary: "TaskBoard request rate above 50 requests/second"
+              description: "The backend has sustained more than 50 requests per second for two minutes."
 
       - name: node-alerts
         rules:

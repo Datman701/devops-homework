@@ -13,6 +13,12 @@ repository and reconciles the cluster to match it (`Synced` / `Healthy`). With
 automatically; with `prune: true`, resources removed from the chart are removed
 from the cluster.
 
+For the local minikube demo the Application passes `ingress.enabled=false`.
+The ingress-nginx controller is exposed as a NodePort, so it does not publish a
+LoadBalancer address; keeping the Ingress in the Application would leave
+ArgoCD's Ingress health check at `Progressing`. The Helm chart and raw manifests
+still contain the Ingress and are exercised in the Kubernetes evidence.
+
 ## Bootstrap
 
 ```bash
